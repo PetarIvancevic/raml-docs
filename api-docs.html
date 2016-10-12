@@ -1,0 +1,274 @@
+<!DOCTYPE HTML><html><head><title>ECP Skeleton API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/raml2html/raml2html 4.0.0-beta7"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script><script type="text/javascript">
+      $(document).ready(function() {
+        $('.page-header pre code, .top-resource-description pre code, .modal-body pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        $('[data-toggle]').click(function() {
+          var selector = $(this).data('target') + ' pre code';
+          $(selector).each(function(i, block) {
+            hljs.highlightBlock(block);
+          });
+        });
+
+        // open modal on hashes like #_action_get
+        $(window).bind('hashchange', function(e) {
+          var anchor_id = document.location.hash.substr(1); //strip #
+          var element = $('#' + anchor_id);
+
+          // do we have such element + is it a modal?  --> show it
+          if (element.length && element.hasClass('modal')) {
+            element.modal('show');
+          }
+        });
+
+        // execute hashchange on first page load
+        $(window).trigger('hashchange');
+
+        // remove url fragment on modal hide
+        $('.modal').on('hidden.bs.modal', function() {
+          try {
+            if (history && history.replaceState) {
+                history.replaceState({}, '', '#');
+            }
+          } catch(e) {}
+        });
+      });
+    </script><style>
+      .hljs {
+        background: transparent;
+      }
+      .parent {
+        color: #999;
+      }
+      .list-group-item > .badge {
+        float: none;
+        margin-right: 6px;
+      }
+      .panel-title > .methods {
+        float: right;
+      }
+      .badge {
+        border-radius: 0;
+        text-transform: uppercase;
+        width: 70px;
+        font-weight: normal;
+        color: #f3f3f6;
+        line-height: normal;
+      }
+      .badge_get {
+        background-color: #63a8e2;
+      }
+      .badge_post {
+        background-color: #6cbd7d;
+      }
+      .badge_put {
+        background-color: #22bac4;
+      }
+      .badge_delete {
+        background-color: #d26460;
+      }
+      .badge_patch {
+        background-color: #ccc444;
+      }
+      .list-group, .panel-group {
+        margin-bottom: 0;
+      }
+      .panel-group .panel+.panel-white {
+        margin-top: 0;
+      }
+      .panel-group .panel-white {
+        border-bottom: 1px solid #F5F5F5;
+        border-radius: 0;
+      }
+      .panel-white:last-child {
+        border-bottom-color: white;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .panel-white .panel-heading {
+        background: white;
+      }
+      .tab-pane ul {
+        padding-left: 2em;
+      }
+      .tab-pane h1 {
+        font-size: 1.3em;
+      }
+      .tab-pane h2 {
+        font-size: 1.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab-pane h3 {
+        font-size: 1.1em;
+      }
+      .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+      }
+      #sidebar {
+        margin-top: 30px;
+        padding-right: 5px;
+        overflow: auto;
+        height: 90%;
+      }
+      .top-resource-description {
+        border-bottom: 1px solid #ddd;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description {
+        border-bottom: 1px solid #fcfcfc;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description p:last-child {
+        margin: 0;
+      }
+      .list-group .badge {
+        float: left;
+      }
+      .method_description {
+        margin-left: 85px;
+      }
+      .method_description p:last-child {
+        margin: 0;
+      }
+      .list-group-item {
+        cursor: pointer;
+      }
+      .list-group-item:hover {
+        background-color: #f5f5f5;
+      }
+
+      pre code {
+        overflow: auto;
+        word-wrap: normal;
+        white-space: pre;
+      }
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>ECP Skeleton API documentation <small>version v1</small></h1><p>http://localhost:3000</p><h3 id="home"><a href="#home">Home</a></h3><p>Bacon ipsum dolor amet frankfurter turducken pancetta, tenderloin meatball burgdoggen sausage drumstick leberkas short ribs. Ham hock rump bresaola strip steak prosciutto brisket jerky filet mignon doner cupim turkey. Pork belly strip steak alcatra pastrami jowl short ribs jerky kevin tongue chicken capicola. Pork chop pastrami shankle t-bone tail. Beef rump corned beef strip steak doner, cupim ground round boudin shankle. Salami porchetta beef capicola frankfurter, shoulder t-bone sirloin. T-bone swine burgdoggen drumstick strip steak kielbasa picanha venison chuck short loin.</p><p>Capicola frankfurter cow biltong pig jowl fatback andouille. Meatloaf pork chop landjaeger cow. Shoulder meatball turkey swine. T-bone cupim biltong jowl capicola pig swine tongue salami chicken tenderloin. Jerky landjaeger ball tip frankfurter. Ham hock leberkas tail pastrami beef swine pork belly flank turkey kielbasa sirloin strip steak. Cow swine prosciutto pig strip steak, corned beef meatball salami.</p><p>Strip steak landjaeger short ribs cupim brisket tri-tip sausage. Short ribs jowl ham strip steak brisket. Bacon short ribs andouille swine meatball. Salami boudin doner jerky short ribs beef ribs pig shoulder strip steak tongue kielbasa drumstick sirloin ham. Pork belly turducken jerky pork drumstick, boudin ball tip cow pastrami burgdoggen tenderloin. Flank doner filet mignon bacon pork venison alcatra kevin ham tongue. Drumstick pastrami picanha sirloin ham hock beef cow shankle venison.</p><p>Rump leberkas meatball alcatra swine brisket. Tail biltong meatloaf, capicola chuck pork brisket drumstick pancetta leberkas kevin prosciutto sausage hamburger. Capicola ham hock beef ribs meatloaf, leberkas picanha jerky shank bacon. Turkey kielbasa ham hock pork belly.</p><p>Shoulder tongue pastrami ribeye chicken short loin hamburger andouille ham hock jerky burgdoggen. Short ribs landjaeger ham hock, pork loin pastrami salami andouille shank jerky kielbasa turducken. Filet mignon cow leberkas pig, turkey tenderloin capicola. Alcatra prosciutto pork belly, cow kielbasa ham doner bresaola jerky beef ribs landjaeger porchetta sausage salami.</p><p>Bresaola jerky flank sausage, porchetta chuck tail kielbasa cupim meatloaf pork loin rump. Turkey meatball ball tip flank pig bresaola tongue alcatra beef ribs hamburger filet mignon. Beef beef ribs ham hock chuck meatball brisket. Pig sirloin cow beef ribs cupim drumstick spare ribs meatball pork belly bresaola chicken.</p><p>Prosciutto turkey chuck ham hock tail ground round. Landjaeger pig pork belly jerky boudin alcatra pork bacon. Short ribs meatball leberkas spare ribs shank strip steak. Porchetta venison meatloaf pancetta leberkas andouille turkey meatball jerky chuck. Pork belly brisket turducken corned beef, boudin drumstick hamburger flank landjaeger capicola. Rump cupim kielbasa jerky ground round beef ribs turducken prosciutto, pig ham hock beef. Ham hock alcatra fatback pastrami cupim meatball tail.</p><p>Ham corned beef doner shank, pancetta beef jowl chuck leberkas landjaeger t-bone chicken. Meatloaf bresaola short loin porchetta. Alcatra swine boudin drumstick, burgdoggen jerky short ribs sirloin short loin. Ground round jowl meatball biltong.</p><p>Spare ribs landjaeger jerky chicken short ribs short loin porchetta ham hock corned beef biltong kevin. Pastrami chuck pork chop prosciutto frankfurter filet mignon. Picanha t-bone short ribs, biltong pork loin spare ribs drumstick. Brisket bacon picanha bresaola. Pork loin corned beef sirloin frankfurter. Shank andouille porchetta pork chop pork belly capicola, ground round shankle doner. Capicola short loin short ribs jerky flank ground round pork tenderloin picanha frankfurter shoulder biltong chicken beef ribs.</p><p>Tongue shoulder ground round chuck ribeye. Hamburger meatball pork loin kielbasa, turkey leberkas bresaola swine jerky sausage jowl picanha pastrami. Ham hock picanha meatball shank, shankle pork loin ball tip t-bone kevin rump pork. Boudin ham brisket tenderloin beef. Burgdoggen chuck short ribs pork kielbasa pastrami ground round beef ribs t-bone jerky ham andouille tenderloin cupim swine.</p><p>Biltong capicola pork belly tri-tip cupim meatloaf fatback andouille prosciutto tongue shank burgdoggen venison. Pancetta sirloin burgdoggen cupim, sausage short loin beef meatloaf shank. Rump t-bone ham hock, swine pork ball tip hamburger bacon biltong short ribs tri-tip. Chuck hamburger meatloaf cow. Kevin landjaeger salami bresaola jerky shoulder boudin t-bone. Tongue landjaeger sausage salami jerky strip steak kielbasa short loin meatball flank. Bresaola chuck hamburger meatball filet mignon rump burgdoggen turducken cupim pork chop short loin andouille tenderloin capicola.</p><p>Sausage landjaeger meatloaf bresaola. Filet mignon pork loin corned beef biltong, frankfurter drumstick pancetta tail chicken landjaeger sirloin alcatra tenderloin cow. Salami biltong ham hock shank sausage kevin. Strip steak boudin venison corned beef prosciutto burgdoggen. Drumstick alcatra pork belly rump sirloin ham hock.</p><p>Bacon strip steak corned beef beef porchetta ball tip. Strip steak tongue jerky, rump filet mignon boudin pastrami kielbasa leberkas shank ground round short loin alcatra. Swine shank meatball brisket leberkas kielbasa, pork loin andouille filet mignon fatback. Tenderloin pastrami biltong swine, ground round pancetta ham jerky. Cupim ball tip pork pork belly tri-tip, bresaola jerky bacon drumstick swine jowl beef ribs kielbasa hamburger chicken.</p><p>Flank pork loin shoulder turkey alcatra doner, pork belly andouille. Venison pastrami pig, jerky corned beef burgdoggen capicola ribeye. Porchetta pork belly spare ribs landjaeger meatloaf ham. Capicola jowl shank ground round filet mignon, fatback bacon leberkas ham sausage rump strip steak kevin andouille. T-bone burgdoggen chuck filet mignon ball tip venison. Hamburger corned beef biltong alcatra ham ground round turkey pork belly filet mignon picanha.</p><p>Venison tongue t-bone salami beef tenderloin short ribs ham hock drumstick chicken porchetta cow frankfurter prosciutto. Swine venison prosciutto tail sirloin ground round ribeye spare ribs kevin rump pork belly porchetta salami filet mignon. Flank pork loin ground round chuck pancetta shank biltong salami tongue spare ribs jerky. Chuck swine burgdoggen, drumstick tri-tip cow spare ribs meatball. Cupim tenderloin tail pork loin, burgdoggen chicken kielbasa jowl chuck. Pork loin ham hock tongue flank doner.</p><p>Pork loin bacon turducken prosciutto pig rump fatback filet mignon corned beef doner shoulder. Doner jerky frankfurter chicken jowl. Tri-tip sausage venison, sirloin jowl spare ribs jerky kielbasa pork loin frankfurter fatback hamburger. Turkey tenderloin rump swine biltong.</p><p>Sausage salami swine bacon doner chicken kevin short ribs flank. Boudin beef ribeye, swine kielbasa t-bone flank alcatra hamburger pancetta. T-bone shoulder chuck sirloin alcatra tri-tip pork belly prosciutto boudin cow short loin. Boudin brisket shank drumstick, chicken burgdoggen doner kielbasa short ribs picanha filet mignon andouille prosciutto corned beef. Sirloin chuck short loin, leberkas prosciutto drumstick jerky tenderloin frankfurter burgdoggen spare ribs strip steak shankle.</p><p>Cupim pig kielbasa, sausage short ribs tongue shankle corned beef. Turkey shankle brisket spare ribs. Kielbasa venison leberkas picanha, meatloaf sirloin t-bone meatball strip steak drumstick frankfurter tenderloin corned beef. Frankfurter capicola pancetta, pastrami tail shankle chuck burgdoggen ham hock ribeye rump short loin cupim corned beef. Ribeye ground round pastrami, ham hock pork alcatra porchetta. Swine jowl frankfurter jerky brisket capicola leberkas ham hock pork tongue pig venison doner cupim. Andouille short ribs pork belly porchetta.</p><p>Kielbasa rump pork belly, landjaeger alcatra jowl hamburger meatloaf doner. Spare ribs ground round boudin beef ribs. Rump corned beef turkey, tongue brisket salami porchetta venison biltong boudin meatloaf tenderloin alcatra prosciutto. Pork chop biltong prosciutto meatloaf drumstick chuck turkey meatball shoulder strip steak bresaola venison tongue beef ribs. Shankle tenderloin meatloaf, rump drumstick pork pork loin. Meatball jowl turducken capicola, tail frankfurter tenderloin drumstick picanha pancetta.</p><p>Brisket kevin biltong jowl capicola. T-bone cow drumstick tenderloin, pork shank salami rump turducken spare ribs. Pork belly turkey chicken cupim frankfurter strip steak short loin pig ground round boudin. Turducken jerky venison pork loin, pork belly porchetta corned beef beef tongue strip steak rump meatball bacon ground round. Spare ribs cupim shankle alcatra meatloaf prosciutto pork loin burgdoggen corned beef. T-bone bresaola swine picanha leberkas, drumstick kevin meatloaf chuck tongue turducken. Sausage ham frankfurter capicola jerky spare ribs.</p><p>Tail burgdoggen sirloin, biltong shank alcatra ham hock sausage beef pork pork chop beef ribs boudin landjaeger jerky. Hamburger jerky jowl shank beef ribs tail tenderloin kevin drumstick flank cow porchetta swine. Prosciutto pork tail tenderloin capicola ground round jerky bacon kevin sausage pancetta cow ball tip biltong hamburger. Prosciutto tri-tip sirloin, corned beef t-bone kevin alcatra picanha frankfurter kielbasa bresaola capicola. Bacon bresaola turducken t-bone.</p><p>Boudin meatloaf ball tip chuck, kielbasa swine salami prosciutto rump shank ground round turducken capicola. Venison corned beef drumstick porchetta kevin sausage andouille landjaeger pork belly bresaola. Pork bresaola sausage pastrami boudin sirloin short ribs ham meatball rump leberkas doner prosciutto hamburger turducken. Brisket ham sausage spare ribs, sirloin jerky pork loin boudin.</p><p>Short ribs ham meatball, picanha tongue pastrami doner frankfurter. Short loin alcatra tongue andouille meatball. Tail kevin meatball sausage, ground round frankfurter ribeye ball tip cupim fatback picanha hamburger pastrami t-bone short loin. Andouille spare ribs short loin meatball. Turducken ball tip tenderloin, shank short ribs kielbasa sausage chicken short loin leberkas kevin. Jowl corned beef hamburger bresaola leberkas ham landjaeger prosciutto swine porchetta pork flank. Pork loin tri-tip corned beef beef pastrami frankfurter cow doner biltong porchetta ribeye pig kielbasa strip steak.</p><p>Swine doner biltong chicken sirloin, pig beef ribs ham hock. Spare ribs fatback pig, short loin ground round kielbasa jowl tongue burgdoggen beef ribs leberkas short ribs turkey. Tenderloin spare ribs alcatra, kevin hamburger tongue short loin frankfurter pork ham filet mignon drumstick flank pastrami. Short loin filet mignon alcatra venison brisket. Tail prosciutto shoulder jerky frankfurter beef ribs hamburger picanha. Kevin fatback doner short ribs jerky alcatra, meatloaf beef burgdoggen frankfurter ham spare ribs picanha kielbasa shank.</p><p>Brisket ball tip tri-tip, beef ribs salami pork chop pig t-bone flank capicola ribeye chuck prosciutto. Boudin cupim strip steak, fatback flank short ribs burgdoggen pastrami jowl sausage beef ribs pork alcatra venison. Shoulder ham drumstick jerky. Biltong tenderloin capicola ham brisket.</p><p>Chuck pork belly pork, rump shoulder bresaola sirloin tri-tip prosciutto filet mignon pork loin turkey kielbasa brisket porchetta. Alcatra tail turducken, prosciutto pork chop porchetta beef landjaeger shankle beef ribs short loin meatloaf meatball. Jowl shankle filet mignon swine turducken pork belly. Frankfurter leberkas landjaeger salami meatloaf pork loin. Meatball kevin bresaola shank turkey pastrami chicken, t-bone spare ribs tongue ham fatback tenderloin sirloin ribeye. Tail ground round short ribs biltong doner landjaeger shank. Cupim filet mignon burgdoggen andouille, drumstick alcatra ham hock corned beef.</p><p>Drumstick chuck ham hock corned beef, bresaola ground round cow spare ribs. Ground round jowl bresaola turkey fatback flank, ribeye tail. Picanha cow hamburger short loin, t-bone tail rump. Alcatra shank fatback venison, beef ribs beef shankle chuck bresaola bacon flank. Tongue pancetta landjaeger filet mignon pork. Bresaola pig hamburger, burgdoggen beef ribs ribeye pork belly meatloaf salami. Tongue shank pastrami ribeye short ribs.</p><p>Ham beef ribs rump, doner shankle sausage salami kielbasa landjaeger drumstick alcatra venison strip steak ribeye. Chicken shankle t-bone hamburger. Strip steak hamburger turkey swine pancetta, boudin prosciutto beef ribs ground round chuck meatball. Boudin fatback jerky strip steak.</p><p>Jerky shoulder capicola, ham hock chicken boudin pork loin brisket ball tip corned beef kevin bresaola. Strip steak filet mignon burgdoggen, alcatra turkey fatback ground round. Tri-tip bacon meatloaf kevin, frankfurter porchetta cow ball tip pancetta shank. Short ribs frankfurter pork loin, prosciutto sirloin landjaeger tail ball tip bacon porchetta beef ribs. Sirloin pork loin bacon tri-tip t-bone picanha andouille drumstick flank tail kielbasa landjaeger swine. Meatball cupim ground round, pork loin kielbasa alcatra porchetta picanha.</p><p>Pork loin frankfurter swine, pastrami jerky salami spare ribs filet mignon bacon ham. Bresaola ground round capicola, alcatra ham turducken fatback. Burgdoggen rump shoulder venison andouille swine pork belly leberkas brisket chuck doner beef ribs. Spare ribs shankle turducken, bresaola jerky bacon tail porchetta flank fatback tongue shoulder. Kielbasa turkey sirloin, kevin tri-tip boudin spare ribs bacon. Tail sirloin porchetta short ribs tongue pig.</p><p>Alcatra ham pork porchetta andouille jerky. T-bone shoulder pork loin pig picanha meatloaf pancetta jowl. Tenderloin ball tip short loin kevin, capicola spare ribs doner frankfurter shankle sirloin biltong rump tri-tip porchetta chicken. Pancetta biltong sausage, pork belly pig frankfurter venison pork loin boudin beef ribs porchetta tail tri-tip.</p><p>Turducken corned beef salami picanha. Cow swine cupim flank, beef tenderloin turkey meatball salami prosciutto ham hock tongue andouille. Shankle brisket bresaola pastrami, sirloin flank frankfurter prosciutto corned beef ball tip. Brisket prosciutto jowl t-bone tail shoulder pork loin cow.</p><p>Filet mignon shankle swine alcatra spare ribs jowl, ham capicola salami kevin pork ball tip. Corned beef ball tip fatback, chicken biltong rump t-bone. Landjaeger ribeye turkey shank ball tip chuck meatloaf. Ham hock tongue short ribs pancetta. Short loin tongue alcatra, ribeye tail capicola strip steak chicken drumstick prosciutto pancetta chuck brisket fatback.</p><p>Beef strip steak ground round, pork loin cow leberkas hamburger meatball fatback. Leberkas burgdoggen shankle short ribs t-bone sirloin, cow chicken pork rump pancetta beef ribs biltong cupim beef. Ribeye landjaeger ham pork belly short ribs kielbasa burgdoggen strip steak chicken andouille. Pig ball tip doner, boudin filet mignon meatloaf fatback bresaola hamburger cow spare ribs sirloin turkey sausage. Beef ribs short loin pork chop cupim fatback jowl burgdoggen ball tip alcatra tri-tip. Corned beef ribeye kielbasa chuck pastrami turkey sirloin meatloaf cow ground round flank salami leberkas pork chop.</p><p>Brisket bacon t-bone shankle. Ham swine pig tri-tip shoulder, pastrami beef ribs meatball jerky sirloin boudin tail andouille. Jerky landjaeger chuck shankle, bacon kevin kielbasa frankfurter. Kevin pork loin strip steak, turkey rump tenderloin pork flank picanha andouille pastrami meatball meatloaf. Sausage pig beef ribs drumstick kielbasa.</p><p>Sausage shoulder pork strip steak, meatloaf meatball biltong chuck brisket jerky. Ham pork chop sausage pork loin meatloaf, shoulder drumstick beef jerky tail ham hock. Frankfurter shank tail brisket tenderloin jowl turkey capicola ball tip meatball. Corned beef tri-tip ham, short ribs drumstick tongue pork loin chuck pork chop meatloaf shoulder fatback kielbasa. Swine turducken boudin sirloin. Swine shank ribeye burgdoggen pork chop. Filet mignon beef short loin boudin.</p><p>Ham ground round tri-tip frankfurter corned beef. Venison drumstick spare ribs shank sausage rump meatball tail salami flank pork belly strip steak andouille. Pork loin short ribs pastrami drumstick swine bresaola. Prosciutto bacon frankfurter burgdoggen tenderloin pork loin tri-tip landjaeger drumstick filet mignon. Doner fatback cow shankle capicola andouille pork belly chicken ball tip burgdoggen. Salami pork loin hamburger meatloaf, beef ribs bacon alcatra sausage leberkas ribeye pastrami porchetta ball tip. Tenderloin pork chop meatloaf prosciutto picanha ball tip, brisket short loin doner.</p><p>Ribeye shoulder shankle venison pancetta sausage, strip steak jowl jerky. Jowl short loin swine brisket leberkas ham hock chuck biltong picanha. Prosciutto swine salami, short loin flank turkey pork belly shoulder. Jerky shankle pork chop filet mignon venison pig, cow meatball alcatra sausage tenderloin cupim drumstick short loin. Kevin pork bresaola shankle venison burgdoggen meatloaf sirloin. Biltong picanha ham, spare ribs porchetta flank burgdoggen strip steak capicola venison landjaeger beef meatloaf frankfurter pork chop. Brisket pig strip steak shankle frankfurter chicken meatloaf pork belly filet mignon burgdoggen ham hock.</p><p>Shoulder biltong short ribs t-bone, porchetta spare ribs hamburger ham hock ball tip brisket kevin turducken flank pancetta shank. Biltong burgdoggen turkey tongue kielbasa. Filet mignon ball tip bacon, chicken fatback venison shoulder andouille rump chuck. Meatloaf jerky ball tip, pastrami prosciutto brisket short ribs beef landjaeger cupim bresaola pork belly ground round kielbasa. Jowl brisket kielbasa, pork chop sirloin bresaola landjaeger pork belly venison short ribs ham hock. Kielbasa ham hock flank beef ribs. Turducken boudin kevin, beef short loin sirloin salami shoulder meatball pork ball tip t-bone pastrami landjaeger biltong.</p><p>Pastrami ribeye burgdoggen ham hock. Pastrami pancetta tongue chicken frankfurter, corned beef short ribs ham hock spare ribs bresaola beef picanha pig. Kielbasa capicola prosciutto t-bone cupim tri-tip, rump ribeye fatback venison sirloin salami brisket jowl. Cow flank pork loin, andouille prosciutto shankle boudin meatloaf shoulder shank kevin jerky bresaola tongue. Brisket ball tip filet mignon pork loin tenderloin jowl.</p><p>Bacon spare ribs kevin doner alcatra shoulder sirloin, hamburger tenderloin meatloaf frankfurter shank tri-tip porchetta. Porchetta ham hock burgdoggen beef short ribs brisket. Pork burgdoggen pork chop beef ground round bresaola porchetta. Beef ribs leberkas rump picanha tongue beef, ground round drumstick fatback chicken prosciutto. Ribeye bresaola tail fatback, shoulder short loin short ribs ground round.</p><p>Pork meatball pastrami, alcatra ham pork belly landjaeger boudin beef ribs capicola. Shank ground round cupim, chuck jowl ball tip short ribs kevin tongue fatback strip steak brisket t-bone jerky prosciutto. Filet mignon bresaola strip steak, spare ribs beef ribs drumstick pig pork loin. Drumstick beef alcatra andouille, ham ribeye porchetta jowl tail tenderloin. Pig tail filet mignon brisket. Jowl pastrami turkey filet mignon. Rump ribeye ham kevin ground round.</p><p>Turducken pig andouille tenderloin shank biltong pancetta strip steak. Strip steak swine salami rump frankfurter alcatra tri-tip sirloin shoulder beef ribs brisket drumstick hamburger tail ribeye. Jerky swine frankfurter drumstick cupim tri-tip porchetta rump ribeye pastrami bresaola biltong. Short ribs flank swine, shank filet mignon pancetta spare ribs. Porchetta picanha sausage, bacon pork spare ribs capicola hamburger boudin. Tail kielbasa ball tip brisket bresaola capicola corned beef landjaeger biltong. Jowl flank picanha kevin.</p><p>Jerky meatloaf swine burgdoggen tongue, tenderloin venison pastrami ribeye turducken pancetta shankle. Sirloin leberkas rump, short loin tri-tip pork picanha. Sausage pig meatball tail strip steak. Hamburger boudin sausage andouille tri-tip ground round shoulder turducken t-bone, cupim pig jowl chuck bacon ribeye.</p><p>Tri-tip short ribs fatback pork chop chicken, venison biltong corned beef prosciutto. Flank kielbasa tenderloin landjaeger rump cupim picanha. Shoulder flank boudin tongue biltong. Drumstick chicken porchetta, kielbasa cupim turkey capicola venison pancetta kevin picanha ball tip. Biltong frankfurter beef, sausage beef ribs short ribs ground round venison swine filet mignon kevin tenderloin. Tongue strip steak chuck tail alcatra doner pork brisket hamburger beef ribs shankle corned beef t-bone. Leberkas jerky jowl salami t-bone, tongue alcatra.</p><p>T-bone strip steak shoulder bresaola boudin chuck pancetta biltong rump flank sirloin swine pork chop. Shoulder porchetta meatball fatback tail. Pork loin strip steak tail cupim. Turkey tail strip steak, bacon shankle flank ham. Ham hock ham pork chop pork loin meatloaf filet mignon, picanha shank venison bresaola strip steak pastrami.</p><p>Turkey tenderloin jerky spare ribs sausage, kevin pork loin short loin andouille capicola bacon boudin kielbasa tail picanha. Pancetta short loin burgdoggen landjaeger corned beef alcatra. Turkey rump biltong pig ground round landjaeger. Swine jowl chuck fatback. Pig capicola landjaeger chuck pork loin shoulder, flank frankfurter meatball bacon pancetta tongue sirloin fatback. Shoulder short ribs fatback filet mignon. Jerky jowl corned beef pig prosciutto shankle cupim hamburger.</p><p>Prosciutto fatback short ribs pork belly cupim. Venison hamburger shank beef ribs alcatra ham hock sirloin drumstick beef rump shoulder turducken kielbasa picanha. Flank bacon venison kevin pancetta pork belly strip steak meatloaf pork ground round drumstick picanha pork chop biltong. Salami tail short loin corned beef. T-bone ball tip doner, pastrami corned beef venison tri-tip boudin beef flank pork alcatra. Andouille turducken prosciutto, burgdoggen meatball pastrami pork loin tongue swine meatloaf corned beef filet mignon ham hock shank tenderloin.</p><p>Chicken andouille picanha jowl cow alcatra sausage pig pancetta spare ribs. Cow pork belly ham, capicola picanha shankle corned beef turkey doner short loin. Kielbasa pork chop cupim pancetta meatloaf prosciutto tri-tip andouille filet mignon flank. Swine cow flank landjaeger filet mignon meatloaf doner ham hock ball tip. Venison short ribs tongue landjaeger alcatra burgdoggen. Capicola pancetta picanha pork chop tenderloin ham hock. Tongue shank alcatra t-bone.</p><p>Venison pork loin shankle brisket ground round salami ham ribeye meatball pork sausage capicola. Pork chop capicola salami, pancetta kielbasa pork loin shoulder doner rump cupim. Turducken kielbasa tenderloin, cupim prosciutto turkey filet mignon chuck ham hock ball tip pancetta tongue chicken landjaeger rump. Landjaeger cow filet mignon tail andouille. Bresaola swine burgdoggen frankfurter pig. Picanha hamburger tongue ground round.</p><p>Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!</p><h3 id="architecture"><a href="#architecture">Architecture</a></h3><p>This is the architecture.</p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="authenticate" class="panel-title">/authenticate</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_authenticate"><span class="parent"></span>/authenticate</a> <span class="methods"><a href="#authenticate_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_authenticate" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#authenticate_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Authenticate user</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="authenticate_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/authenticate</h4></div><div class="modal-body"><div class="alert alert-info"><p>Authenticate user</p></div><ul class="nav nav-tabs"><li class="active"><a href="#authenticate_post_request" data-toggle="tab">Request</a></li><li><a href="#authenticate_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="authenticate_post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>:</p><pre><code>{
+  "email": {
+    "type": "string",
+    "required": true
+  },
+  "password": {
+    "type": "string",
+    "required": true
+  }
+}
+</code></pre><p><strong>Examples</strong>:</p><pre><code>{
+  "email": "regular.user@mail.com",
+  "password": "Password123"
+}
+</code></pre></div><div class="tab-pane" id="authenticate_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Successfully authenticated user.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Examples</strong>:</p><pre><code>{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC802ksjic2VySWQiOjIsImlhdCI6MTQ3NjIwMDQwNiwiZXhwIjoyMDgxMDAwNDA2fQ.AeEXmnJQTsyK-1iT2fBZpBIc64Jpd1ddM08YBTx9P4U",
+  "user": {
+    "id": 1,
+    "bio": "Some user bio",
+    "confirmed": true,
+    "email": "user@mail.com",
+    "firstname": "name",
+    "lastname": "lastname",
+    "createdAt": "2016-10-06T21:41:15.000Z",
+    "updatedAt": "2016-10-06T21:41:15.000Z",
+    "resourceId": 1,
+    "image": "https://s3.amazonaws.com/ecp-boilerplate/9b4395a0-8c0d-11e6-8927-f93573da9dd0"
+  }
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Bad requests made for authentication. There are two scenarios.</p><ul><li>Wrong parameters in body</li><li>Wrong password</li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>message</strong>: <em>required (string)</em><p>Error message thrown from API.</p></li><li><strong>debugInfo</strong>: <em>(array)</em><p>Array of objects containing path to wrong property and error message.</p></li><li><strong>error</strong>: <em>required (object)</em></li></ul><p><strong>Examples</strong>:</p><pre><code>{
+  "message": "Parameters error",
+  "debugInfo": [
+    {
+      "path": "email",
+      "message": "Email is required"
+    },
+    {
+      "path": "password",
+      "message": "Password is required"
+    }
+  ],
+  "error": {
+    "message": "Parameters error",
+    "debugInfo": [
+      {
+        "path": "email",
+        "message": "Email is required"
+      },
+      {
+        "path": "password",
+        "message": "Password is required"
+      }
+    ],
+    "status": 400
+  }
+}</code></pre><pre><code>{
+  "message": "Wrong password",
+  "error": {
+    "message": "Wrong password",
+    "status": 400
+  }
+}</code></pre><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>message</strong>: <em>required (string)</em><p>Error message thrown from API.</p></li><li><strong>debugInfo</strong>: <em>(array)</em><p>Array of objects containing path to wrong property and error message.</p></li><li><strong>error</strong>: <em>required (object)</em></li></ul><p><strong>Examples</strong>:</p><pre><code>{
+  "message": "User not found",
+  "error": {
+      "message": "User not found",
+      "status": 404
+    }
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="superadmin_authenticate" class="panel-title">/superAdmin/authenticate</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_superadmin_authenticate"><span class="parent"></span>/superAdmin/authenticate</a> <span class="methods"><a href="#superadmin_authenticate_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_superadmin_authenticate" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#superadmin_authenticate_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Authenticate superadmin</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="superadmin_authenticate_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/superAdmin/authenticate</h4></div><div class="modal-body"><div class="alert alert-info"><p>Authenticate superadmin</p></div><ul class="nav nav-tabs"><li class="active"><a href="#superadmin_authenticate_post_request" data-toggle="tab">Request</a></li><li><a href="#superadmin_authenticate_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="superadmin_authenticate_post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>email</strong>: <em>required (string)</em></li><li><strong>password</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="superadmin_authenticate_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Successfully authenticated superadmin.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Examples</strong>:</p><pre><code>{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC802ksjic2VySWQiOjIsImlhdCI6MTQ3NjIwMDQwNiwiZXhwIjoyMDgxMDAwNDA2fQ.AeEXmnJQTsyK-1iT2fBZpBIc64Jpd1ddM08YBTx9P4U",
+  "user": {
+    "id": 1,
+    "bio": "Some user bio",
+    "confirmed": true,
+    "email": "user@mail.com",
+    "firstname": "name",
+    "lastname": "lastname",
+    "createdAt": "2016-10-06T21:41:15.000Z",
+    "updatedAt": "2016-10-06T21:41:15.000Z"
+  }
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Bad requests made for authentication. There are two scenarios.</p><ul><li>Wrong parameters in body</li><li>Wrong password</li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>message</strong>: <em>required (string)</em><p>Error message thrown from API.</p></li><li><strong>debugInfo</strong>: <em>(array)</em><p>Array of objects containing path to wrong property and error message.</p></li><li><strong>error</strong>: <em>required (object)</em></li></ul><p><strong>Examples</strong>:</p><pre><code>{
+  "message": "Parameters error",
+  "debugInfo": [
+    {
+      "path": "email",
+      "message": "Email is required"
+    },
+    {
+      "path": "password",
+      "message": "Password is required"
+    }
+  ],
+  "error": {
+    "message": "Parameters error",
+    "debugInfo": [
+      {
+        "path": "email",
+        "message": "Email is required"
+      },
+      {
+        "path": "password",
+        "message": "Password is required"
+      }
+    ],
+    "status": 400
+  }
+}</code></pre><pre><code>{
+  "message": "Wrong password",
+  "error": {
+    "message": "Wrong password",
+    "status": 400
+  }
+}</code></pre><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>message</strong>: <em>required (string)</em><p>Error message thrown from API.</p></li><li><strong>debugInfo</strong>: <em>(array)</em><p>Array of objects containing path to wrong property and error message.</p></li><li><strong>error</strong>: <em>required (object)</em></li></ul><p><strong>Examples</strong>:</p><pre><code>{
+  "message": "User not found",
+  "error": {
+      "message": "User not found",
+      "status": 404
+    }
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#authenticate">/authenticate</a></li><li><a href="#superadmin_authenticate">/superAdmin/authenticate</a></li></ul></div></div></div></div></body></html>
