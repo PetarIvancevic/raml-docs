@@ -3,22 +3,24 @@ title: ECP Skeleton
 version: v1
 baseUri: http://localhost:3000
 
-description: Skeleton routes documentation.
 documentation:
  - title: Home
    content: !include documentation/home.txt
  - title: Architecture
    content: !include documentation/architecture.txt
 
-
 types:
-  RegularLogin:
-    type: !include schemas/authenticate/regular/Login.json
-  LoginBody:
-    type: object
+  Login:
     properties:
-      email: string
-      password: string
+      email:
+        description: Needs to be valid email address
+      password:
+        minLength: 8
+        description: |
+          Password needs to have:
+            - One uppercase character
+            - One lowercase character
+            - One number
   User:
     type: object
     properties:
@@ -30,9 +32,6 @@ types:
         type: string
         required: false
       email: string
-      password:
-        type: string
-        required: false
       bio:
         type: string
         required: false
@@ -42,12 +41,18 @@ types:
       image:
         type: string
         required: false
+  # Used in error object
   DebugInfo:
+    description: Additional data for error handling.
     properties:
-      path: string
-      message: string
+      path:
+        type: string
+        description: Name of invalid property
+      message:
+        type: string
+        description: Error message
   Error:
-    description: Generic error thrown on routes.
+    description: Generic error.
     type: object
     properties:
       message:
@@ -74,14 +79,14 @@ types:
     description: Authenticate user
     body:
       application/json:
-        type: RegularLogin
+        type: Login
         example: !include examples/controllers/authenticate/Login.json
     responses:
       200:
         description: Successfully authenticated user.
         body:
           application/json:
-            example: !include schemas/authenticate/regular/userWithToken.json
+            example: !include examples/controllers/authenticate/userWithToken.json
       400:
         description: |
           Bad requests made for authentication. There are two scenarios.
@@ -123,95 +128,42 @@ types:
         body:
           application/json:
             type: Error
-            example: !include schemas/generic_errors/userNotFound.json
+            example: !include examples/errors/generic/userNotFound.json
 
-/superAdmin/authenticate:
-  post:
-    description: Authenticate superadmin
-    body:
-      application/json:
-        type: LoginBody
-    responses:
-      200:
-        description: Successfully authenticated superadmin.
-        body:
-          application/json:
-            example: !include schemas/authenticate/superAdmin/superAdminWithToken.json
-      400:
-        description: |
-          Bad requests made for authentication. There are two scenarios.
-            - Wrong parameters in body
-            - Wrong password
-        body:
-          application/json:
-            type: Error
-            examples:
-              validationError: {
-                message: "Parameters error",
-                debugInfo: [{
-                  path: "email",
-                  message: "Email is required"
-                }, {
-                  path: "password",
-                  message: "Password is required"
-                }],
-                error: {
-                  message: "Parameters error",
-                  debugInfo: [{
-                    path: "email",
-                    message: "Email is required"
-                  }, {
-                    path: "password",
-                    message: "Password is required"
-                  }],
-                  status: 400
-                }
-              }
-              wrongPassword: {
-                "message": "Wrong password",
-                "error": {
-                  "message": "Wrong password",
-                  "status": 400
-                }
-              }
-      404:
-        body:
-          application/json:
-            type: Error
-            example: !include schemas/generic_errors/userNotFound.json
 
-# /users:
-#   get:
-#     queryParameters:
-#       page:
-#         description: Defines which page to show, depending on the number of users and total number of users.
-#         type: number
-#         required: false
-#       limit:
-#         description: Defines the number of users to show per page.
-#         type: number
-#         required: false
-#     description: |
-#       Paginated list of users.
-#     responses:
-#       200:
-#         body:
-#           application/json:
-#             type: object
-#             properties:
-#               count:
-#                 type: number
-#               rows:
-#                 type: array
-#                 items: User
-#             example: !include examples/controllers/users/list.json
-#   post:
-#     body:
-#       application/json:
-#
-#     responses:
-#       200:
-#         description: New user successfully created.
-#         body:
-#           application/json:
-#             type: User
+
+# # /users:
+# #   get:
+# #     queryParameters:
+# #       page:
+# #         description: Defines which page to show, depending on the number of users and total number of users.
+# #         type: number
+# #         required: false
+# #       limit:
+# #         description: Defines the number of users to show per page.
+# #         type: number
+# #         required: false
+# #     description: |
+# #       Paginated list of users.
+# #     responses:
+# #       200:
+# #         body:
+# #           application/json:
+# #             type: object
+# #             properties:
+# #               count:
+# #                 type: number
+# #               rows:
+# #                 type: array
+# #                 items: User
+# #             example: !include examples/controllers/users/list.json
+# #   post:
+# #     body:
+# #       application/json:
+# #
+# #     responses:
+# #       200:
+# #         description: New user successfully created.
+# #         body:
+# #           application/json:
+# #             type: User
