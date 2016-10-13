@@ -10,17 +10,21 @@ documentation:
    content: !include documentation/architecture.txt
 
 types:
+  Password:
+    type: string
+    minLength: 8
+    description: |
+      Password needs to have:
+        - One uppercase character
+        - One lowercase character
+        - One number
+
   Login:
     properties:
       email:
         description: Needs to be valid email address
-      password:
-        minLength: 8
-        description: |
-          Password needs to have:
-            - One uppercase character
-            - One lowercase character
-            - One number
+      password: Password
+
   User:
     type: object
     properties:
@@ -41,6 +45,7 @@ types:
       image:
         type: string
         required: false
+
   # Used in error object
   DebugInfo:
     description: Additional data for error handling.
@@ -51,6 +56,7 @@ types:
       message:
         type: string
         description: Error message
+
   Error:
     description: Generic error.
     type: object
@@ -130,40 +136,103 @@ types:
             type: Error
             example: !include examples/errors/generic/userNotFound.json
 
+/changeEmail:
+  post:
+    description: Request to change user email address.
+    body:
+      application/json:
+        type: object
+        properties:
+          oldEmail:
+            type: string
+            description: Users current email address.
+          newEmail:
+            type: string
+            description: Users new email address.
+          password: Password
+        example: {
+          oldEmail: "some.old@mail.com",
+          password: "Password123",
+          newEmail: "some.new@mail.com"
+        }
+    responses:
+      200:
+        description: An email will be sent to the user to confirm their new email address.
+        body:
+          application/json:
+            type: object
+            example: {
+              message: "An email has been sent to your new email address"
+            }
+      400:
+        description: |
+          Bad requests.
+          - Wrong parameters sent
+          - Wrong user password
+          - New email is already in use
+        body:
+          application/json:
+            type: Error
+            examples:
+              validationError: {
+                message: "Parameters error",
+                debugInfo: [{
+                  path: "oldEmail",
+                  message: "oldEmail is required"
+                }, {
+                  path: "newEmail",
+                  message: "newEmail is required"
+                }, {
+                  path: "password",
+                  message: "Password is required"
+                }],
+                error: {
+                  message: "Parameters error",
+                  debugInfo: [{
+                    path: "email",
+                    message: "oldEmail is required"
+                  }, {
+                    path: "newEmail",
+                    message: "newEmail is required"
+                  }, {
+                    path: "password",
+                    message: "Password is required"
+                  }],
+                  status: 400
+                }
+              }
+              wrongPassword: {
+                "message": "Wrong password",
+                "error": {
+                  "message": "Wrong password",
+                  "status": 400
+                }
+              }
+              emailInUse: {
+                message: "Email is already in use",
+                error: {
+                  message: "Email is already in use",
+                  status: 400
+                }
+              }
+      404:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/generic/userNotFound.json
 
-
-# # /users:
-# #   get:
-# #     queryParameters:
-# #       page:
-# #         description: Defines which page to show, depending on the number of users and total number of users.
-# #         type: number
-# #         required: false
-# #       limit:
-# #         description: Defines the number of users to show per page.
-# #         type: number
-# #         required: false
-# #     description: |
-# #       Paginated list of users.
-# #     responses:
-# #       200:
-# #         body:
-# #           application/json:
-# #             type: object
-# #             properties:
-# #               count:
-# #                 type: number
-# #               rows:
-# #                 type: array
-# #                 items: User
-# #             example: !include examples/controllers/users/list.json
-# #   post:
-# #     body:
-# #       application/json:
-# #
-# #     responses:
-# #       200:
-# #         description: New user successfully created.
-# #         body:
-# #           application/json:
-# #             type: User
+/emailConfirm:
+  post:
+    description: |
+      Used for email confirmation.
+      There are two scenarios:
+        - If a user requested to change email, it will update the user email
+        - If a new account was created and the user followed the link in his email it will confirm his email address
+    body:
+      application/json:
+        type: object
+        properties:
+          token: string
+        example: {
+          token: "123e4567-e89b-12d3-a456-426655440000"
+        }
