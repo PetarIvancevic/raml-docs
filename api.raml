@@ -32,6 +32,7 @@ types:
             - One uppercase character
             - One lowercase character
             - One number
+
   Password:
     type: string
     minLength: 8
@@ -67,6 +68,30 @@ types:
         type: string
         required: false
 
+  UserData:
+    type: object
+    properties:
+      id: number
+      confirmed: boolean
+      firstname:
+        type: string
+        required: false
+      lastname:
+        type: string
+        required: false
+      email: string
+      bio:
+        type: string
+        required: false
+      resourceId:
+        type: number
+        required: false
+      image:
+        type: string
+        required: false
+      createdAt: datetime
+      updatedAt: datetime
+
   UserUpdate:
     type: object
     properties:
@@ -79,6 +104,28 @@ types:
       bio:
         type: string
         required: false
+
+  UserCreate:
+    type: object
+    properties:
+      firstname:
+        type: string
+        required: false
+      lastname:
+        type: string
+        required: false
+      bio:
+        type: string
+        required: false
+      email: string
+      password:
+          type: string
+          minLength: 8
+          description: |
+            Password needs to have:
+              - One uppercase character
+              - One lowercase character
+              - One number
 
   ChangePassword:
     properties:
@@ -393,6 +440,151 @@ types:
             type: Error
             example: !include examples/errors/validation/resendConfirmation.json
 
+/users:
+  get:
+    queryParameters:
+      page:
+        description: Defines which page to show, depending on the number of users and total number of users.
+        type: number
+        required: false
+      limit:
+        description: Defines the number of users to show per page.
+        type: number
+        required: false
+    description: |
+      Paginated list of users.
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            properties:
+              count:
+                type: number
+              rows:
+                type: array
+                items: UserData
+            example: !include examples/controllers/users/list.json
+  post:
+    description: |
+      Create user.
+    body:
+      multipart/form-data:
+        properties:
+          image:
+            type: file
+            description: User image
+            required: false
+          firstname:
+            type: string
+            required: false
+          lastname:
+            type: string
+            required: false
+          email:
+            type: string
+            required: true
+          password:
+            type: string
+            minLength: 8
+            description: |
+              Password needs to have:
+                - One uppercase character
+                - One lowercase character
+                - One number
+          bio:
+            type: string
+            required: false
+        example: {
+          image: "File",
+          firstname: "New",
+          lastname: "User",
+          email: "new.user@mail.com",
+          password: "newUserPassword123",
+          bio: "This is the new users bio"
+        }
+      application/json:
+        type: UserCreate
+        example: !include examples/controllers/users/createUser.json
+    responses:
+      201:
+        description: |
+          There are two scenarios for updating a user:
+            - User properties updated with image
+            - Only user properties updated
+        body:
+          application/json:
+            type: object
+            properties:
+              confirmed: boolean
+              id: number
+              firstname:
+                type: string
+                required: false
+              lastname:
+                type: string
+                required: false
+              email: string
+              bio:
+                type: string
+                required: false
+              resourceId:
+                type: number
+                required: false
+              image:
+                type: string
+                required: false
+            examples:
+              createWithImage: {
+                confirmed: false,
+                id: 1,
+                email: "new.user@mail.com",
+                firstname: "New",
+                lastname: "User",
+                bio: "This is the new user bio",
+                resourceId: 1,
+                image: "https://s3.amazonaws.com/ecp-boilerplate/images/9b4395a0-8c0d-11e6-8927-f93573da9dd0.jpg"
+              }
+              createWithoutImage: {
+                confirmed: false,
+                id: 1,
+                email: "new.user@mail.com",
+                firstname: "New",
+                lastname: "User",
+                bio: "This is the created user bio"
+              }
+      400:
+        description: |
+          Bad request for creating user. There are two scenarios:
+            - Wrong parameters in body
+            - Email sent is already taken by other user
+        body:
+          application/json:
+            type: Error
+            examples:
+              validationError: {
+                message: "Parameters error",
+                debugInfo: [{
+                  path: "email",
+                  message: "required"
+                }],
+                error: {
+                  message: "Parameters error",
+                  debugInfo: [{
+                    path: "password",
+                    message: "required"
+                  }],
+                  status: 400
+                }
+              }
+              takenEmail: {
+                message: "User already exists",
+                error: {
+                  message: "User already exists",
+                  status: 400
+                }
+              }
+
 /users/{userId}:
   get:
     description: |
@@ -401,7 +593,7 @@ types:
       200:
         body:
           application/json:
-            type: User
+            type: UserData
             example: !include examples/controllers/users/showUser.json
       404:
         body:
@@ -493,6 +685,7 @@ types:
           application/json:
             type: Error
             example: !include examples/errors/generic/userNotFound.json
+
   delete:
     securedBy: jsonwebtoken
     description: |
@@ -515,6 +708,7 @@ types:
           application/json:
             type: Error
             example: !include examples/errors/generic/userNotFound.json
+
 /resetPassword:
   post:
     description: User reset password

@@ -1,7 +1,7 @@
 {
-  "email": "new.email@mail.com",
-  "password": "MyPassword123",
-  "firstname": "Jack",
-  "lastname": "Nicholson",
-  "bio": "You can't handle the truth!"
+  "email": "new.user@mail.com",
+  "password": "newUserPassword123",
+  "firstname": "New",
+  "lastname": "User",
+  "bio": "This is the new users bio"
 }
