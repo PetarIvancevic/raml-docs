@@ -189,7 +189,7 @@ types:
                 error: {
                   message: "Parameters error",
                   debugInfo: [{
-                    path: "email",
+                    path: "oldEmail",
                     message: "oldEmail is required"
                   }, {
                     path: "newEmail",
@@ -236,3 +236,55 @@ types:
         example: {
           token: "123e4567-e89b-12d3-a456-426655440000"
         }
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            properties:
+              message: string
+            example: { message: "Email confirmed" }
+      400:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/generic/userAlreadyExists.json
+      404:
+        body:
+          application/json:
+            type: Error
+            examples:
+              tokenDoesNotExist: {
+                message: "Confirmation email does not exist",
+                error: {
+                  message: "Confirmation email does not exist",
+                  status: 404
+                }
+              }
+
+/resendConfirmation:
+  post:
+    description: |
+      Resend the confirmation email. There are two scenarios:
+        - New user created and needs the confirmation email resent
+        - Existing user wants to change email and needs the confirmation email resent
+    body:
+      application/json:
+        type: object
+        properties:
+          email: string
+        example: { email: "user@mail.com" }
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            properties:
+              message: string
+            example: { message: "Your confirmation email has been sent" }
+      400:
+        description: Email not provided in request.
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/validation/resendConfirmation.json
