@@ -9,6 +9,17 @@ documentation:
  - title: Architecture
    content: !include documentation/architecture.txt
 
+securitySchemes:
+  jsonwebtoken:
+    type: x-token
+    describedBy:
+      headers:
+        Authorization:
+          type: string
+          description: |
+            Header used to recognize the user.<br>
+            <b>Format:</b> Bearer TOKEN
+
 types:
   Login:
     properties:
@@ -53,6 +64,19 @@ types:
         type: number
         required: false
       image:
+        type: string
+        required: false
+
+  UserUpdate:
+    type: object
+    properties:
+      firstname:
+        type: string
+        required: false
+      lastname:
+        type: string
+        required: false
+      bio:
         type: string
         required: false
 
@@ -369,6 +393,128 @@ types:
             type: Error
             example: !include examples/errors/validation/resendConfirmation.json
 
+/users/{userId}:
+  get:
+    description: |
+      Show the user.
+    responses:
+      200:
+        body:
+          application/json:
+            type: User
+            example: !include examples/controllers/users/showUser.json
+      404:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/generic/userNotFound.json
+
+  post:
+    securedBy: jsonwebtoken
+    description: |
+      Update user data.
+    body:
+      multipart/form-data:
+        properties:
+          image:
+            type: file
+            description: User image
+            required: false
+          firstname:
+            type: string
+            required: false
+          lastname:
+            type: string
+            required: false
+          bio:
+            type: string
+            required: false
+        example: {
+          image: "File",
+          firstname: "Mike",
+          lastname: "Myers",
+          bio: "This is the updated bio"
+        }
+      application/json:
+        type: UserUpdate
+        example: !include examples/controllers/users/updateUser.json
+    responses:
+      200:
+        description: |
+          There are two scenarios for updating a user:
+            - User properties updated with image
+            - Only user properties updated
+        body:
+          application/json:
+            type: object
+            properties:
+              id: number
+              firstname:
+                type: string
+                required: false
+              lastname:
+                type: string
+                required: false
+              email: string
+              bio:
+                type: string
+                required: false
+              resourceId:
+                type: number
+                required: false
+              image:
+                type: string
+                required: false
+            examples:
+              updateWithImage: {
+                id: 1,
+                email: "mike.myers@mail.com",
+                firstname: "Mike",
+                lastname: "Myers",
+                bio: "This is the updated bio",
+                resourceId: 1,
+                image: "https://s3.amazonaws.com/ecp-boilerplate/images/9b4395a0-8c0d-11e6-8927-f93573da9dd0.jpg"
+              }
+              updateProperties: {
+                id: 1,
+                email: "mike.myers@mail.com",
+                firstname: "Mike",
+                lastname: "Myers",
+                bio: "This is the updated bio"
+              }
+      403:
+        description: Trying to update other user.
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/cannotDeleteUser.json
+      404:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/generic/userNotFound.json
+  delete:
+    securedBy: jsonwebtoken
+    description: |
+      Delete user.
+    responses:
+      200:
+        description: User is deleted.
+        body:
+          application/json:
+            type: object
+            example: { message: "User successfully removed" }
+      403:
+        description: Trying to delete other user.
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/cannotDeleteUser.json
+      404:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/generic/userNotFound.json
 /resetPassword:
   post:
     description: User reset password
@@ -421,6 +567,11 @@ types:
                   status: 400
                 }
               }
+      404:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/generic/userNotFound.json
 
 /recoverPassword/{token}:
   post:
@@ -466,38 +617,8 @@ types:
                   status: 404
                 }
               }
-# /users:
-#   get:
-#     queryParameters:
-#       page:
-#         description: Defines which page to show, depending on the number of users and total number of users.
-#         type: number
-#         required: false
-#       limit:
-#         description: Defines the number of users to show per page.
-#         type: number
-#         required: false
-#     description: |
-#       Paginated list of users.
-#     responses:
-#       200:
-#         body:
-#           application/json:
-#             type: object
-#             properties:
-#               count:
-#                 type: number
-#               rows:
-#                 type: array
-#                 items: User
-#             example: !include examples/controllers/users/list.json
-#   post:
-#     body:
-#       application/json:
-#
-#     responses:
-#       200:
-#         description: New user successfully created.
-#         body:
-#           application/json:
-#             type: User
+      404:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/generic/userNotFound.json
