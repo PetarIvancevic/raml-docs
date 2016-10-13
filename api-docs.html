@@ -209,4 +209,123 @@
       "status": 404
     }
 }
-</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#authenticate">/authenticate</a></li></ul></div></div></div></div></body></html>
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="changepassword" class="panel-title">/changePassword</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_changepassword"><span class="parent"></span>/changePassword</a> <span class="methods"><a href="#changepassword_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_changepassword" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#changepassword_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>User change password</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="changepassword_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/changePassword</h4></div><div class="modal-body"><div class="alert alert-info"><p>User change password</p></div><ul class="nav nav-tabs"><li class="active"><a href="#changepassword_post_request" data-toggle="tab">Request</a></li><li><a href="#changepassword_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="changepassword_post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>oldPassword</strong>: <em>required (string - minLength: 8)</em><p>Password needs to have:</p><ul><li>One uppercase character</li><li>One lowercase character</li><li>One number</li></ul></li><li><strong>newPassword</strong>: <em>required (string - minLength: 8)</em><p>Password needs to have:</p><ul><li>One uppercase character</li><li>One lowercase character</li><li>One number</li></ul></li></ul><p><strong>Examples</strong>:</p><pre><code>{
+  "oldPassword": "Oldpassword123",
+  "newPassword": "Newpassword123"
+}
+</code></pre></div><div class="tab-pane" id="changepassword_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Successfully changed user password.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Examples</strong>:</p><pre><code>{
+  "id": 2,
+  "bio": null,
+  "confirmed": true,
+  "email": "user@mail.com",
+  "firstname": "name",
+  "lastname": "lastname",
+  "createdAt": "2016-10-10T10:46:17.000Z",
+  "updatedAt": "2016-10-12T15:34:08.770Z",
+  "resourceId": 1
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Bad requests made for user change password. There are two scenarios.</p><ul><li>Wrong parameters in body</li><li>Wrong old password send</li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>message</strong>: <em>required (string)</em><p>Error message thrown from API.</p></li><li><strong>debugInfo</strong>: <em>(array)</em><p>Array of objects containing path to wrong property and error message.</p></li><li><strong>error</strong>: <em>required (object)</em></li></ul><p><strong>Examples</strong>:</p><pre><code>{
+  "message": "Parameters error",
+  "debugInfo": [
+    {
+      "path": "oldPassword",
+      "message": "required"
+    },
+    {
+      "path": "newPassword",
+      "message": "required"
+    }
+  ],
+  "error": {
+    "message": "Parameters error",
+    "debugInfo": [
+      {
+        "path": "oldPassword",
+        "message": "required"
+      },
+      {
+        "path": "newPassword",
+        "message": "required"
+      }
+    ],
+    "status": 400
+  }
+}</code></pre><pre><code>{
+  "message": "Wrong password",
+  "error": {
+    "message": "Wrong password",
+    "status": 400
+  }
+}</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="resetpassword" class="panel-title">/resetPassword</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_resetpassword"><span class="parent"></span>/resetPassword</a> <span class="methods"><a href="#resetpassword_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_resetpassword" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#resetpassword_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>User reset password</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="resetpassword_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/resetPassword</h4></div><div class="modal-body"><div class="alert alert-info"><p>User reset password</p></div><ul class="nav nav-tabs"><li class="active"><a href="#resetpassword_post_request" data-toggle="tab">Request</a></li><li><a href="#resetpassword_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="resetpassword_post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: string</p><p><strong>Examples</strong>:</p><pre><code>{
+  "email": "forgot.password@mail.com"
+}
+</code></pre></div><div class="tab-pane" id="resetpassword_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Successfully sent password recovery mail to user email.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Examples</strong>:</p><pre><code>{
+  "message": "Your password has been updated"
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Bad requests made for user reset password. There are two scenarios.</p><ul><li>Wrong parameters in body</li><li>Email sent in wrong format</li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>message</strong>: <em>required (string)</em><p>Error message thrown from API.</p></li><li><strong>debugInfo</strong>: <em>(array)</em><p>Array of objects containing path to wrong property and error message.</p></li><li><strong>error</strong>: <em>required (object)</em></li></ul><p><strong>Examples</strong>:</p><pre><code>{
+  "message": "Parameters error",
+  "debugInfo": [
+    {
+      "path": "email",
+      "message": "required"
+    }
+  ],
+  "error": {
+    "message": "Parameters error",
+    "debugInfo": [
+      {
+        "path": "email",
+        "message": "required"
+      }
+    ],
+    "status": 400
+  }
+}</code></pre><pre><code>{
+  "message": "Parameters error",
+  "debugInfo": [
+    {
+      "path": "email",
+      "message": "has to be valid email"
+    }
+  ],
+  "error": {
+    "message": "Parameters error",
+    "debugInfo": [
+      {
+        "path": "email",
+        "message": "has to be valid email"
+      }
+    ],
+    "status": 400
+  }
+}</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="recoverpassword__token_" class="panel-title">/recoverPassword/{token}</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_recoverpassword__token_"><span class="parent"></span>/recoverPassword/{token}</a> <span class="methods"><a href="#recoverpassword__token__post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_recoverpassword__token_" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#recoverpassword__token__post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>User recover password</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="recoverpassword__token__post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/recoverPassword/{token}</h4></div><div class="modal-body"><div class="alert alert-info"><p>User recover password</p></div><ul class="nav nav-tabs"><li class="active"><a href="#recoverpassword__token__post_request" data-toggle="tab">Request</a></li><li><a href="#recoverpassword__token__post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="recoverpassword__token__post_request"><h3>URI Parameters</h3><ul><li><strong>token</strong>: <em>required (string)</em></li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: string</p><p><strong>Examples</strong>:</p><pre><code>{
+  "email": "recover.password@mail.com"
+}
+</code></pre></div><div class="tab-pane" id="recoverpassword__token__post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>Successfully updated user password.</p><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><p><strong>Examples</strong>:</p><pre><code>{
+  "message": "Your password recovery email has been sent"
+}
+</code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><p>Bad requests made for user reset password. There are two scenarios.</p><ul><li>Wrong parameters in body</li><li>Recovery token does not exist</li></ul><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>message</strong>: <em>required (string)</em><p>Error message thrown from API.</p></li><li><strong>debugInfo</strong>: <em>(array)</em><p>Array of objects containing path to wrong property and error message.</p></li><li><strong>error</strong>: <em>required (object)</em></li></ul><p><strong>Examples</strong>:</p><pre><code>{
+  "message": "Parameters error",
+  "debugInfo": [
+    {
+      "path": "Password",
+      "message": "required"
+    }
+  ],
+  "error": {
+    "message": "Parameters error",
+    "debugInfo": [
+      {
+        "path": "Password",
+        "message": "required"
+      }
+    ],
+    "status": 400
+  }
+}</code></pre><pre><code>{
+  "message": "Recovery token not found",
+  "error": {
+    "message": "Recovery token not found",
+    "status": 404
+  }
+}</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#authenticate">/authenticate</a></li><li><a href="#changepassword">/changePassword</a></li><li><a href="#resetpassword">/resetPassword</a></li><li><a href="#recoverpassword__token_">/recoverPassword/{token}</a></li></ul></div></div></div></div></body></html>
