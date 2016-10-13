@@ -85,6 +85,7 @@ types:
       message:
         type: string
         description: Error message
+
   Error:
     description: Generic error.
     type: object
@@ -164,6 +165,131 @@ types:
             type: Error
             example: !include examples/errors/generic/userNotFound.json
 
+/changeEmail:
+  post:
+    description: Request to change user email address.
+    body:
+      application/json:
+        type: object
+        properties:
+          oldEmail:
+            type: string
+            description: Users current email address.
+          newEmail:
+            type: string
+            description: Users new email address.
+          password: Password
+        example: {
+          oldEmail: "some.old@mail.com",
+          password: "Password123",
+          newEmail: "some.new@mail.com"
+        }
+    responses:
+      200:
+        description: An email will be sent to the user to confirm their new email address.
+        body:
+          application/json:
+            type: object
+            example: {
+              message: "An email has been sent to your new email address"
+            }
+      400:
+        description: |
+          Bad requests.
+          - Wrong parameters sent
+          - Wrong user password
+          - New email is already in use
+        body:
+          application/json:
+            type: Error
+            examples:
+              validationError: {
+                message: "Parameters error",
+                debugInfo: [{
+                  path: "oldEmail",
+                  message: "oldEmail is required"
+                }, {
+                  path: "newEmail",
+                  message: "newEmail is required"
+                }, {
+                  path: "password",
+                  message: "Password is required"
+                }],
+                error: {
+                  message: "Parameters error",
+                  debugInfo: [{
+                    path: "oldEmail",
+                    message: "oldEmail is required"
+                  }, {
+                    path: "newEmail",
+                    message: "newEmail is required"
+                  }, {
+                    path: "password",
+                    message: "Password is required"
+                  }],
+                  status: 400
+                }
+              }
+              wrongPassword: {
+                "message": "Wrong password",
+                "error": {
+                  "message": "Wrong password",
+                  "status": 400
+                }
+              }
+              emailInUse: {
+                message: "Email is already in use",
+                error: {
+                  message: "Email is already in use",
+                  status: 400
+                }
+              }
+      404:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/generic/userNotFound.json
+
+/emailConfirm:
+  post:
+    description: |
+      Used for email confirmation.
+      There are two scenarios:
+        - If a user requested to change email, it will update the user email
+        - If a new account was created and the user followed the link in his email it will confirm his email address
+    body:
+      application/json:
+        type: object
+        properties:
+          token: string
+        example: {
+          token: "123e4567-e89b-12d3-a456-426655440000"
+        }
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            properties:
+              message: string
+            example: { message: "Email confirmed" }
+      400:
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/generic/userAlreadyExists.json
+      404:
+        body:
+          application/json:
+            type: Error
+            examples:
+              tokenDoesNotExist: {
+                message: "Confirmation email does not exist",
+                error: {
+                  message: "Confirmation email does not exist",
+                  status: 404
+                }
+              }
 
 /changePassword:
   post:
@@ -215,6 +341,33 @@ types:
                   "status": 400
                 }
               }
+
+/resendConfirmation:
+  post:
+    description: |
+      Resend the confirmation email. There are two scenarios:
+        - New user created and needs the confirmation email resent
+        - Existing user wants to change email and needs the confirmation email resent
+    body:
+      application/json:
+        type: object
+        properties:
+          email: string
+        example: { email: "user@mail.com" }
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            properties:
+              message: string
+            example: { message: "Your confirmation email has been sent" }
+      400:
+        description: Email not provided in request.
+        body:
+          application/json:
+            type: Error
+            example: !include examples/errors/validation/resendConfirmation.json
 
 /resetPassword:
   post:

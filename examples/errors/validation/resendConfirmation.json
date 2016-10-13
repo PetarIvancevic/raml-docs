@@ -1,0 +1,15 @@
+{
+  "message": "Parameters error",
+  "debugInfo": [{
+    "path": "email",
+    "message": "email is required"
+  }],
+  "error": {
+    "message": "Parameters error",
+    "debugInfo": [{
+      "path": "email",
+      "message": "email is required"
+    }],
+    "status": 400
+  }
+}
