@@ -10,6 +10,17 @@ documentation:
    content: !include documentation/architecture.txt
 
 types:
+  Login:
+    properties:
+      email:
+        description: Needs to be valid email address
+      password:
+        minLength: 8
+        description: |
+          Password needs to have:
+            - One uppercase character
+            - One lowercase character
+            - One number
   Password:
     type: string
     minLength: 8
@@ -19,11 +30,10 @@ types:
         - One lowercase character
         - One number
 
-  Login:
-    properties:
-      email:
-        description: Needs to be valid email address
-      password: Password
+  Email:
+    type: string
+    description: |
+      Email needs to in valid emal format
 
   User:
     type: object
@@ -45,6 +55,25 @@ types:
       image:
         type: string
         required: false
+
+  ChangePassword:
+    properties:
+      oldPassword:
+        type: string
+        minLength: 8
+        description: |
+          Password needs to have:
+            - One uppercase character
+            - One lowercase character
+            - One number
+      newPassword:
+        type: string
+        minLength: 8
+        description: |
+          Password needs to have:
+            - One uppercase character
+            - One lowercase character
+            - One number
 
   # Used in error object
   DebugInfo:
@@ -262,6 +291,57 @@ types:
                 }
               }
 
+/changePassword:
+  post:
+    description: User change password
+    body:
+      application/json:
+        type: ChangePassword
+        example: !include examples/controllers/passwords/changePassword.json
+    responses:
+      200:
+        description: Successfully changed user password.
+        body:
+          application/json:
+            example: !include examples/controllers/passwords/changePasswordResponse.json
+      400:
+        description: |
+          Bad requests made for user change password. There are two scenarios.
+            - Wrong parameters in body
+            - Wrong old password send
+        body:
+          application/json:
+            type: Error
+            examples:
+              validationError: {
+                message: "Parameters error",
+                debugInfo: [{
+                  path: "oldPassword",
+                  message: "required"
+                }, {
+                  path: "newPassword",
+                  message: "required"
+                }],
+                error: {
+                  message: "Parameters error",
+                  debugInfo: [{
+                    path: "oldPassword",
+                    message: "required"
+                  }, {
+                    path: "newPassword",
+                    message: "required"
+                  }],
+                  status: 400
+                }
+              }
+              wrongPassword: {
+                "message": "Wrong password",
+                "error": {
+                  "message": "Wrong password",
+                  "status": 400
+                }
+              }
+
 /resendConfirmation:
   post:
     description: |
@@ -288,3 +368,136 @@ types:
           application/json:
             type: Error
             example: !include examples/errors/validation/resendConfirmation.json
+
+/resetPassword:
+  post:
+    description: User reset password
+    body:
+      application/json:
+        type: Email
+        example: !include examples/controllers/passwords/resetPassword.json
+    responses:
+      200:
+        description: Successfully sent password recovery mail to user email.
+        body:
+          application/json:
+            example: !include examples/controllers/passwords/resetPasswordResponse.json
+      400:
+        description: |
+          Bad requests made for user reset password. There are two scenarios.
+            - Wrong parameters in body
+            - Email sent in wrong format
+        body:
+          application/json:
+            type: Error
+            examples:
+              validationError: {
+                message: "Parameters error",
+                debugInfo: [{
+                  path: "email",
+                  message: "required"
+                }],
+                error: {
+                  message: "Parameters error",
+                  debugInfo: [{
+                    path: "email",
+                    message: "required"
+                  }],
+                  status: 400
+                }
+              }
+              incorrectEmail: {
+                message: "Parameters error",
+                debugInfo: [{
+                  path: "email",
+                  message: "has to be valid email"
+                }],
+                error: {
+                  message: "Parameters error",
+                  debugInfo: [{
+                    path: "email",
+                    message: "has to be valid email"
+                  }],
+                  status: 400
+                }
+              }
+
+/recoverPassword/{token}:
+  post:
+    description: User recover password
+    body:
+      application/json:
+        type: Password
+        example: !include examples/controllers/passwords/recoverPassword.json
+    responses:
+      200:
+        description: Successfully updated user password.
+        body:
+          application/json:
+            example: !include examples/controllers/passwords/recoverPasswordResponse.json
+      400:
+        description: |
+          Bad requests made for user reset password. There are two scenarios.
+            - Wrong parameters in body
+            - Recovery token does not exist
+        body:
+          application/json:
+            type: Error
+            examples:
+              validationError: {
+                message: "Parameters error",
+                debugInfo: [{
+                  path: "Password",
+                  message: "required"
+                }],
+                error: {
+                  message: "Parameters error",
+                  debugInfo: [{
+                    path: "Password",
+                    message: "required"
+                  }],
+                  status: 400
+                }
+              }
+              tokenNotFound: {
+                message: "Recovery token not found",
+                error: {
+                  message: "Recovery token not found",
+                  status: 404
+                }
+              }
+# /users:
+#   get:
+#     queryParameters:
+#       page:
+#         description: Defines which page to show, depending on the number of users and total number of users.
+#         type: number
+#         required: false
+#       limit:
+#         description: Defines the number of users to show per page.
+#         type: number
+#         required: false
+#     description: |
+#       Paginated list of users.
+#     responses:
+#       200:
+#         body:
+#           application/json:
+#             type: object
+#             properties:
+#               count:
+#                 type: number
+#               rows:
+#                 type: array
+#                 items: User
+#             example: !include examples/controllers/users/list.json
+#   post:
+#     body:
+#       application/json:
+#
+#     responses:
+#       200:
+#         description: New user successfully created.
+#         body:
+#           application/json:
+#             type: User
